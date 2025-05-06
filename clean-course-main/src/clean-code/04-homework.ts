@@ -4,57 +4,62 @@
     // Resolver sin la triple condicional dentro del if
     // includes? arrays?
     function isRedFruit(fruit: string): boolean {
+        const redFruits = ['manzana', 'cereza', 'ciruela']
 
-        if (fruit === 'manzana' || fruit === 'cereza' || fruit === 'ciruela') {
-            return true;
-        } else {
-            return false;
-        }
+        return redFruits.includes(fruit);
     }
 
     // Simplificar esta función
     // switch? Object literal? validar posibles colores
-    function getFruitsByColor(color: string): string[] {
 
-        if (color === 'red') {
-            return ['manzana', 'fresa'];
-        } else if (color === 'yellow') {
-            return ['piña', 'banana'];
-        } else if (color === 'purple') {
-            return ['moras', 'uvas']
-        } else {
-            throw Error('the color must be: red, yellow, purple');
+    type FruitColor = 'red' | 'yellow' | 'purple';
+    function getFruitsByColor(color: FruitColor): string[] {
+
+        const fruitsByColor = {
+            red: ['manzana', 'fresa'],
+            yellow: ['piña', 'banana'],
+            purple: ['moras', 'uvas']
         }
+        if (!Object.keys(fruitsByColor).includes(color))
+            throw Error('the color must be: red, yellow, purple');
+
+
+        return fruitsByColor[color];
+
+        /*  switch (color) {
+             case 'red':
+                 return ['manzana', 'fresa'];
+             case 'yellow':
+                 return ['piña', 'banana'];
+             case 'purple':
+                 return ['moras', 'uvas']
+             default:
+                 throw Error('the color must be: red, yellow, purple');
+         } */
     }
 
     // Simplificar esta función
-    let isFirstStepWorking = true;
-    let isSecondStepWorking = true;
-    let isThirdStepWorking = true;
-    let isFourthStepWorking = true;
+    const isFirstStepWorking = true;
+    const isSecondStepWorking = true;
+    const isThirdStepWorking = true;
+    const isFourthStepWorking = true;
 
     function workingSteps() {
-        if (isFirstStepWorking === true) {
-            if (isSecondStepWorking === true) {
-                if (isThirdStepWorking === true) {
-                    if (isFourthStepWorking === true) {
-                        return 'Working properly!';
-                    }
-                    else {
-                        return 'Fourth step broken.';
-                    }
-                }
-                else {
-                    return 'Third step broken.';
-                }
-            }
-            else {
-                return 'Second step broken.';
-            }
-        }
-        else {
+
+        if (!isFirstStepWorking) {
             return 'First step broken.';
         }
+        if (!isSecondStepWorking) {
+            return 'Second step broken.';
+        }
+        if (!isThirdStepWorking) {
+            return 'Third step broken.';
+        }
+        if (!isFourthStepWorking) {
+            return 'Fourth step broken.';
+        }
+        return 'Working properly!';
+
     }
 
 
