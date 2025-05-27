@@ -47,5 +47,5 @@
 
     const userSettings = new UserSettings('C:\\Users\\fernando', 'C:\\Users\\fernando', 'fernando', 'fernando@gmail.com', '123456', 'Fernando', 'M', new Date('1993-08-23'));
 
-    console.log({ userSettings, areCredetentialsValid: userSettings.checkCredentials('123456') });
+    console.log({ userSettings, areCredentialsValid: userSettings.checkCredentials('123456') });
 })

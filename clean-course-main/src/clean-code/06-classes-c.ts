@@ -1,6 +1,7 @@
 (() => {
 
-    // No aplicando el princio de responsabilidad única
+    // Aplicando el principio de responsabilidad única
+    // Priorizar las composición frente a la herencia
     type Gender = 'M' | 'F' | 'NB';
 
     interface PersonProps {
@@ -24,21 +25,20 @@
 
     const newPerson = new Person({ name: 'Fernando', gender: 'M', birthdate: new Date('1993-08-23') });
 
-    interface UserProps extends PersonProps {
+    interface UserProps{
         password: string
         email: string
         username: string
     }
 
 
-    class User extends Person {
+    class User {
         public lastAccess: Date;
         public password: string;
         public email: string;
         public username: string;
         constructor(
-            { name, gender, birthdate, password, email, username }: UserProps) {
-            super({ name, gender, birthdate });
+            { password, email, username }: UserProps) {
             this.lastAccess = new Date();
             this.password = password;
             this.email = email;
@@ -51,30 +51,67 @@
     }
 
     const newUser = new User({
-        name: 'Fernando',
-        gender: 'M',
-        birthdate: new Date('1993-08-23'),
+
         password: '123456',
         email: 'fernando@gmail.com',
         username: 'fernando'
     });
 
-    interface UserSettingsProps extends UserProps {
+    interface SettingsProps {
         workingDirectory: string
         lastOpenFolder: string
     }
 
-    class UserSettings extends User {
+    class Settings {
         public workingDirectory: string;
         public lastOpenFolder: string;
-        constructor({ name, gender, birthdate, password, email, username, workingDirectory, lastOpenFolder }: UserSettingsProps) {
-
-            super({ name, gender, birthdate, password, email, username });
+        constructor({ workingDirectory, lastOpenFolder }: SettingsProps) {
             this.workingDirectory = workingDirectory;
             this.lastOpenFolder = lastOpenFolder;
         }
 
     }
+
+
+   interface UserSettingsProps {
+        name: string
+        gender: Gender
+        birthdate: Date
+        password: string
+        email: string
+        username: string
+        workingDirectory: string
+        lastOpenFolder: string
+       }
+
+    class UserSettings {
+        public person: Person;
+        public user: User;
+        public settings: Settings;
+
+        constructor({
+            name,
+            gender,
+            birthdate,
+            password,
+            email,
+            username,
+            workingDirectory,
+            lastOpenFolder
+        }: UserSettingsProps) {
+
+            this.person= new Person({ name, gender, birthdate });
+            this.user = new User({ password, email, username });
+            this.settings = new Settings({ workingDirectory, lastOpenFolder });
+
+        }
+
+    }
+
+
+    
+
+
     const userSettings = new UserSettings({
         name: 'Fernando',
         gender: 'M',
@@ -82,8 +119,8 @@
         password: '123456',
         email: 'fernando@gmail.com',
         username: 'fernando',
-        workingDirectory: 'C:\\Users\\fernando\\Documents', 
+        workingDirectory: 'C:\\Users\\fernando\\Documents',
         lastOpenFolder: 'C:\\Users\\fernando\\Documents'
     });
-    console.log({ userSettings, areCredentialsValid: userSettings.checkCredentials('123456') });
+    console.log({ userSettings, areCredentialsValid: userSettings.user.checkCredentials('123456') });
 })();
