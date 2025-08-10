@@ -1,5 +1,5 @@
 import './style.css'
-import './clean-code/06-classes-a'
+import './solid/01-srp'
 
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 const app = document.querySelector<HTMLDivElement>('#app')!
